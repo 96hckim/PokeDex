@@ -1,0 +1,49 @@
+# --- [ Android / IntelliJ ] ---
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.idea/deploymentTargetSelector.xml
+.idea/kotlinc.xml
+/captures
+.externalNativeBuild
+.cxx
+/google-services.json
+
+# --- [ Build Artifacts ] ---
+**/build/
+/build/
+/out/
+
+# --- [ Kotlin / Gradle ] ---
+.kotlin
+/gradle/configuration-cache
+/gradle/daemon
+/gradle/workers
+
+# --- [ Secrets & Sensitive Data ] ---
+# API 키나 보안 민감한 설정값은 여기에 저장하고 깃에 올리지 않습니다.
+secrets.properties
+release-keys.jks
+debug.keystore
+
+# --- [ OS Specific ] ---
+*.DS_Store
+.DS_Store
+Thumbs.db
+
+# --- [ Log Files ] ---
+*.log
+
+# --- [ build-logic 관련 (선택사항) ] ---
+# build-logic 모듈을 사용할 때 생기는 임시 파일들
+.bloop/
+.metals/
+
+# -- [ local.properties ] ---
+local.properties
