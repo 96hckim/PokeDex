@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -40,6 +41,11 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.compose.material.iconsExtended)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -52,6 +58,7 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.room.paging)
     ksp(libs.room.compiler)
 
     // Coil
