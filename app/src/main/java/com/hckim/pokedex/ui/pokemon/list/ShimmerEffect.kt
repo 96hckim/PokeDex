@@ -1,4 +1,4 @@
-package com.hckim.pokedex.ui.main
+package com.hckim.pokedex.ui.pokemon.list
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -67,7 +68,7 @@ private fun Card(
     modifier: Modifier,
     content: @Composable () -> Unit
 ) {
-    androidx.compose.material3.Card(
+    Card(
         shape = shape,
         modifier = modifier,
         content = { content() }

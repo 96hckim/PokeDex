@@ -1,9 +1,9 @@
-package com.hckim.pokedex.ui.detail
+package com.hckim.pokedex.ui.pokemon.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hckim.pokedex.domain.repository.PokemonRepository
-import com.hckim.pokedex.ui.base.MviViewModel
+import com.hckim.pokedex.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,19 +16,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(
+class PokemonDetailViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), MviViewModel<DetailViewState, DetailViewIntent, DetailViewEffect> {
+) : ViewModel(), BaseViewModel<PokemonDetailViewState, PokemonDetailViewIntent, PokemonDetailViewEffect> {
 
-    private val _uiState = MutableStateFlow(DetailViewState())
-    override val uiState: StateFlow<DetailViewState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(PokemonDetailViewState())
+    override val uiState: StateFlow<PokemonDetailViewState> = _uiState.asStateFlow()
 
-    private val _effect = MutableSharedFlow<DetailViewEffect>()
-    override val effect: SharedFlow<DetailViewEffect> = _effect.asSharedFlow()
+    private val _effect = MutableSharedFlow<PokemonDetailViewEffect>()
+    override val effect: SharedFlow<PokemonDetailViewEffect> = _effect.asSharedFlow()
 
-    override fun onIntent(intent: DetailViewIntent) {
+    override fun onIntent(intent: PokemonDetailViewIntent) {
         when (intent) {
-            is DetailViewIntent.LoadPokemon -> {
+            is PokemonDetailViewIntent.LoadPokemon -> {
                 loadPokemon(intent.name)
             }
         }

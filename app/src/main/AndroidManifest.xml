@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PokeDex">
         <activity
-            android:name=".MainActivity"
+            android:name=".PokeDexActivity"
             android:exported="true"
             android:theme="@style/Theme.PokeDex">
             <intent-filter>

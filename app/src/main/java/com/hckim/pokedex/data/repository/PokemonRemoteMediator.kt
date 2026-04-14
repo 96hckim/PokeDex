@@ -9,6 +9,9 @@ import com.hckim.pokedex.data.local.PokeDatabase
 import com.hckim.pokedex.data.local.PokemonEntity
 import com.hckim.pokedex.data.local.RemoteKeyEntity
 import com.hckim.pokedex.data.remote.PokemonApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -29,7 +32,8 @@ class PokemonRemoteMediator(
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyAtClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(state.config.pageSize) ?: 0
+                val currentOffset = remoteKeys?.nextKey?.minus(state.config.pageSize) ?: 0
+                currentOffset
             }
 
             LoadType.PREPEND -> {
@@ -57,6 +61,15 @@ class PokemonRemoteMediator(
 
             val endOfPaginationReached = response.next == null
 
+            // FETCH ALL DATA IN PARALLEL OUTSIDE THE TRANSACTION
+            val entities = coroutineScope {
+                response.results.map { resource ->
+                    async {
+                        api.getPokemonDetails(resource.name).toEntity()
+                    }
+                }.awaitAll()
+            }
+
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     db.remoteKeyDao().clearRemoteKeys()
@@ -70,13 +83,8 @@ class PokemonRemoteMediator(
                     val id = it.url.split("/").dropLast(1).last().toInt()
                     RemoteKeyEntity(pokemonId = id, prevKey = prevKey, nextKey = nextKey)
                 }
-                db.remoteKeyDao().insertAll(keys)
 
-                // We need details to get the image and types for the list
-                val entities = response.results.map { resource ->
-                    val details = api.getPokemonDetails(resource.name)
-                    details.toEntity()
-                }
+                db.remoteKeyDao().insertAll(keys)
                 db.pokemonDao().insertAll(entities)
             }
 

@@ -64,6 +64,8 @@ dependencies {
     // Coil
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt.network.okhttp)
+    implementation(libs.coil.kt.svg)
 
     // Paging
     implementation(libs.paging.runtime)

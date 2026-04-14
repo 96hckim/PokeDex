@@ -11,8 +11,24 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pokemon: List<PokemonEntity>)
 
-    @Query("SELECT * FROM pokemon WHERE name LIKE '%' || :query || '%' AND (:type IS NULL OR types LIKE '%' || :type || '%') ORDER BY id ASC")
+    @Query(
+        """
+    SELECT * FROM pokemon 
+    WHERE name LIKE '%' || :query || '%' 
+    AND (:type IS NULL OR types LIKE '%"type":"' || :type || '"%') 
+    ORDER BY id ASC
+"""
+    )
     fun pagingSource(query: String, type: String?): PagingSource<Int, PokemonEntity>
+
+    @Query(
+        """
+    SELECT * FROM pokemon 
+    WHERE id IN (SELECT id FROM favorites)
+    ORDER BY id ASC
+"""
+    )
+    fun favoritesPagingSource(): PagingSource<Int, PokemonEntity>
 
     @Query("DELETE FROM pokemon")
     suspend fun clearAll()

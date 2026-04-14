@@ -9,6 +9,7 @@ import com.hckim.pokedex.data.local.FavoriteEntity
 import com.hckim.pokedex.data.local.PokeDatabase
 import com.hckim.pokedex.data.remote.PokemonApi
 import com.hckim.pokedex.domain.model.Pokemon
+import com.hckim.pokedex.domain.model.PokemonType
 import com.hckim.pokedex.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -21,15 +22,28 @@ class PokemonRepositoryImpl @Inject constructor(
 ) : PokemonRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getPokemonList(query: String, type: String?): Flow<PagingData<Pokemon>> {
+    override fun getPokemonList(query: String, type: PokemonType?): Flow<PagingData<Pokemon>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
-                prefetchDistance = 2,
-                enablePlaceholders = false
+                prefetchDistance = 5,
+                enablePlaceholders = false,
+                initialLoadSize = 40
             ),
             remoteMediator = PokemonRemoteMediator(api, db),
-            pagingSourceFactory = { db.pokemonDao().pagingSource(query, type) }
+            pagingSourceFactory = { db.pokemonDao().pagingSource(query, type?.name) }
+        ).flow.map { pagingData ->
+            pagingData.map { it.toDomain() }
+        }
+    }
+
+    override fun getFavoritePokemonList(): Flow<PagingData<Pokemon>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { db.pokemonDao().favoritesPagingSource() }
         ).flow.map { pagingData ->
             pagingData.map { it.toDomain() }
         }

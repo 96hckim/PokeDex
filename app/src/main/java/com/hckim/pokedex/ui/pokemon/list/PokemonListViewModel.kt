@@ -1,12 +1,13 @@
-package com.hckim.pokedex.ui.main
+package com.hckim.pokedex.ui.pokemon.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hckim.pokedex.domain.model.Pokemon
+import com.hckim.pokedex.domain.model.PokemonType
 import com.hckim.pokedex.domain.repository.PokemonRepository
-import com.hckim.pokedex.ui.base.MviViewModel
+import com.hckim.pokedex.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -23,15 +24,15 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class PokemonListViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), MviViewModel<MainViewState, MainViewIntent, MainViewEffect> {
+) : ViewModel(), BaseViewModel<PokemonListViewState, PokemonListViewIntent, PokemonListViewEffect> {
 
-    private val _uiState = MutableStateFlow(MainViewState())
-    override val uiState: StateFlow<MainViewState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(PokemonListViewState())
+    override val uiState: StateFlow<PokemonListViewState> = _uiState.asStateFlow()
 
-    private val _effect = MutableSharedFlow<MainViewEffect>()
-    override val effect: SharedFlow<MainViewEffect> = _effect.asSharedFlow()
+    private val _effect = MutableSharedFlow<PokemonListViewEffect>()
+    override val effect: SharedFlow<PokemonListViewEffect> = _effect.asSharedFlow()
 
     private val _searchParams = MutableStateFlow(SearchParams())
 
@@ -49,31 +50,31 @@ class MainViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
-    override fun onIntent(intent: MainViewIntent) {
+    override fun onIntent(intent: PokemonListViewIntent) {
         when (intent) {
-            is MainViewIntent.SearchPokemon -> {
+            is PokemonListViewIntent.SearchPokemon -> {
                 _uiState.update { it.copy(searchQuery = intent.query) }
                 _searchParams.update { it.copy(query = intent.query) }
             }
 
-            is MainViewIntent.FilterByType -> {
+            is PokemonListViewIntent.FilterByType -> {
                 _uiState.update { it.copy(selectedType = intent.type) }
                 _searchParams.update { it.copy(type = intent.type) }
             }
 
-            is MainViewIntent.ClickPokemon -> {
+            is PokemonListViewIntent.ClickPokemon -> {
                 viewModelScope.launch {
-                    _effect.emit(MainViewEffect.NavigateToDetail(intent.pokemon.name))
+                    _effect.emit(PokemonListViewEffect.NavigateToDetail(intent.pokemon.name))
                 }
             }
 
-            is MainViewIntent.ToggleFavorite -> {
+            is PokemonListViewIntent.ToggleFavorite -> {
                 viewModelScope.launch {
                     repository.toggleFavorite(intent.pokemon)
                 }
             }
 
-            MainViewIntent.Refresh -> {
+            PokemonListViewIntent.Refresh -> {
                 // Paging 3 handles refresh through the adapter
             }
         }
@@ -81,6 +82,6 @@ class MainViewModel @Inject constructor(
 
     private data class SearchParams(
         val query: String = "",
-        val type: String? = null
+        val type: PokemonType? = null
     )
 }

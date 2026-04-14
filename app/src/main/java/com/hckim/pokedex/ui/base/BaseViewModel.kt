@@ -9,7 +9,7 @@ interface ViewIntent
 
 interface ViewEffect
 
-interface MviViewModel<S : ViewState, I : ViewIntent, E : ViewEffect> {
+interface BaseViewModel<S : ViewState, I : ViewIntent, E : ViewEffect> {
     val uiState: StateFlow<S>
     val effect: SharedFlow<E>
     fun onIntent(intent: I)

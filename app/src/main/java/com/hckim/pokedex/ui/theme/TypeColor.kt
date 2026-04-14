@@ -19,26 +19,4 @@ val TypeGhost = Color(0xFF735797)
 val TypeDragon = Color(0xFF6F35FC)
 val TypeSteel = Color(0xFFB7B7CE)
 val TypeFairy = Color(0xFFD685AD)
-
-fun getPokemonTypeColor(type: String): Color {
-    return when (type.lowercase()) {
-        "normal" -> TypeNormal
-        "fire" -> TypeFire
-        "water" -> TypeWater
-        "electric" -> TypeElectric
-        "grass" -> TypeGrass
-        "ice" -> TypeIce
-        "fighting" -> TypeFighting
-        "poison" -> TypePoison
-        "ground" -> TypeGround
-        "flying" -> TypeFlying
-        "psychic" -> TypePsychic
-        "bug" -> TypeBug
-        "rock" -> TypeRock
-        "ghost" -> TypeGhost
-        "dragon" -> TypeDragon
-        "steel" -> TypeSteel
-        "fairy" -> TypeFairy
-        else -> Color.Gray
-    }
-}
+val TypeUnknown = Color.Gray
