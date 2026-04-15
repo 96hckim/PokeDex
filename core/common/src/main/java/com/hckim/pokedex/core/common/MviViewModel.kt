@@ -3,13 +3,13 @@ package com.hckim.pokedex.core.common
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
-interface ViewState
+interface UiState
 
-interface ViewIntent
+interface UiIntent
 
-interface ViewEffect
+interface UiEffect
 
-interface BaseViewModel<S : ViewState, I : ViewIntent, E : ViewEffect> {
+interface MviViewModel<S : UiState, I : UiIntent, E : UiEffect> {
     val uiState: StateFlow<S>
     val effect: SharedFlow<E>
     fun onIntent(intent: I)

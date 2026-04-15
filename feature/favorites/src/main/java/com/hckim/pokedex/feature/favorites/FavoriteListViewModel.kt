@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.hckim.pokedex.core.common.BaseViewModel
+import com.hckim.pokedex.core.common.MviViewModel
 import com.hckim.pokedex.core.domain.PokemonRepository
 import com.hckim.pokedex.core.model.Pokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteListViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), BaseViewModel<FavoriteListViewState, FavoriteListViewIntent, FavoriteListViewEffect> {
+) : ViewModel(), MviViewModel<FavoriteListViewState, FavoriteListViewIntent, FavoriteListViewEffect> {
 
     private val _uiState = MutableStateFlow(FavoriteListViewState())
     override val uiState: StateFlow<FavoriteListViewState> = _uiState.asStateFlow()

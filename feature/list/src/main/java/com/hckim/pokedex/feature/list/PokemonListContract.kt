@@ -1,8 +1,8 @@
 package com.hckim.pokedex.feature.list
 
-import com.hckim.pokedex.core.common.ViewEffect
-import com.hckim.pokedex.core.common.ViewIntent
-import com.hckim.pokedex.core.common.ViewState
+import com.hckim.pokedex.core.common.UiEffect
+import com.hckim.pokedex.core.common.UiIntent
+import com.hckim.pokedex.core.common.UiState
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonType
 
@@ -11,9 +11,9 @@ data class PokemonListViewState(
     val searchQuery: String = "",
     val selectedType: PokemonType? = null,
     val favoriteIds: List<Int> = emptyList()
-) : ViewState
+) : UiState
 
-sealed interface PokemonListViewIntent : ViewIntent {
+sealed interface PokemonListViewIntent : UiIntent {
     data class Search(val query: String) : PokemonListViewIntent
     data class FilterByType(val type: PokemonType?) : PokemonListViewIntent
     data class Click(val pokemon: Pokemon) : PokemonListViewIntent
@@ -21,7 +21,7 @@ sealed interface PokemonListViewIntent : ViewIntent {
     data object Refresh : PokemonListViewIntent
 }
 
-sealed interface PokemonListViewEffect : ViewEffect {
+sealed interface PokemonListViewEffect : UiEffect {
     data class NavigateToDetail(val pokemonName: String) : PokemonListViewEffect
     data class ShowError(val message: String) : PokemonListViewEffect
 }

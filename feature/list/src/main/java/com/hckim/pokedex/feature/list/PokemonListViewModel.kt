@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.hckim.pokedex.core.common.BaseViewModel
+import com.hckim.pokedex.core.common.MviViewModel
 import com.hckim.pokedex.core.domain.PokemonRepository
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonType
@@ -26,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), BaseViewModel<PokemonListViewState, PokemonListViewIntent, PokemonListViewEffect> {
+) : ViewModel(), MviViewModel<PokemonListViewState, PokemonListViewIntent, PokemonListViewEffect> {
 
     private val _uiState = MutableStateFlow(PokemonListViewState())
     override val uiState: StateFlow<PokemonListViewState> = _uiState.asStateFlow()

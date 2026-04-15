@@ -1,20 +1,20 @@
 package com.hckim.pokedex.feature.detail
 
-import com.hckim.pokedex.core.common.ViewEffect
-import com.hckim.pokedex.core.common.ViewIntent
-import com.hckim.pokedex.core.common.ViewState
+import com.hckim.pokedex.core.common.UiEffect
+import com.hckim.pokedex.core.common.UiIntent
+import com.hckim.pokedex.core.common.UiState
 import com.hckim.pokedex.core.model.Pokemon
 
 data class PokemonDetailViewState(
     val pokemon: Pokemon? = null,
     val isLoading: Boolean = false,
     val error: String? = null
-) : ViewState
+) : UiState
 
-sealed interface PokemonDetailViewIntent : ViewIntent {
+sealed interface PokemonDetailViewIntent : UiIntent {
     data class LoadPokemon(val name: String) : PokemonDetailViewIntent
 }
 
-sealed interface PokemonDetailViewEffect : ViewEffect {
+sealed interface PokemonDetailViewEffect : UiEffect {
     data object NavigateBack : PokemonDetailViewEffect
 }

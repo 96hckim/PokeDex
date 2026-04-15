@@ -2,7 +2,7 @@ package com.hckim.pokedex.feature.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hckim.pokedex.core.common.BaseViewModel
+import com.hckim.pokedex.core.common.MviViewModel
 import com.hckim.pokedex.core.domain.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonDetailViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), BaseViewModel<PokemonDetailViewState, PokemonDetailViewIntent, PokemonDetailViewEffect> {
+) : ViewModel(), MviViewModel<PokemonDetailViewState, PokemonDetailViewIntent, PokemonDetailViewEffect> {
 
     private val _uiState = MutableStateFlow(PokemonDetailViewState())
     override val uiState: StateFlow<PokemonDetailViewState> = _uiState.asStateFlow()
