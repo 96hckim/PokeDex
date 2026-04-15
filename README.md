@@ -18,6 +18,7 @@
 - **Language:** [Kotlin](https://kotlinlang.org/)
 - **UI:** [Jetpack Compose](https://developer.android.com/jetpack/compose) (Declarative UI)
 - **Architecture:** MVI (Model-View-Intent), Clean Architecture, Multi-Module
+- **Build & Infra:** Kotlin DSL, Convention Plugins (build-logic), Version Catalog
 - **DI:** [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 - **Networking:** [Retrofit2](https://square.github.io/retrofit/), OkHttp3, Kotlinx Serialization
 - **Local Storage:** [Room](https://developer.android.com/training/data-storage/room) (SQLite)
@@ -29,20 +30,28 @@
 
 ## 🏗 Architecture & Design
 
-### 1. MVI (Model-View-Intent)
-예측 가능한 UI 상태 관리를 위해 단방향 데이터 흐름(UDF)을 보장하는 MVI 패턴을 채택했습니다.
+### 1. Build Logic & Convention Plugins (Gradle 컨벤션 플러그인)
+복잡한 멀티 모듈 프로젝트를 효율적으로 관리하기 위해 `build-logic` 디렉토리에 **Gradle 컨벤션 플러그인**을 직접 구현하여 사용했습니다.
+- **설정의 중앙 집중화:** Kotlin, Android, Compose, Hilt, Room 등 반복되는 빌드 설정을 플러그인으로 추출하여 재사용성을 높였습니다.
+- **Type-Safe 의존성 관리:** Version Catalog(`libs.versions.toml`)를 활용하여 프로젝트 전체의 라이브러리 버전을 일관되게 관리합니다.
+- **모듈별 빌드 스크립트 최적화:** 각 모듈의 `build.gradle.kts` 파일을 간결하게 유지하고, 공통 설정은 컨벤션 플러그인에 위임하여 유지보수성을 극대화했습니다.
+
+### 2. MVI (Model-View-Intent)
+예측 가능한 UI 상태 관리를 위해 단방향 데이터 흐름(UDF)을 보장하고 MVVM에서 발생할 수 있는 State Fragment(상태 파편화) 문제를 해결하고 UI 상태의 예측 가능성을 보장하기 위해 도입했습니다.
 - **State:** UI의 모든 상태를 단일 진실 공급원(SSOT)으로 관리하여 불일치 문제 해결.
 - **Intent:** 사용자의 액션을 캡슐화하여 비즈니스 로직으로 명확히 전달.
 - **Effect:** 네비게이션, 스낵바 출력 등 일회성 이벤트를 사이드 이펙트로 분리 처리.
+- **Base Interface:** `UiState`, `UiIntent`, `UiEffect` 인터페이스를 통한 일관된 ViewModel 구조 정의.
+- **[Data Flow]** `User Intent` ➔ `ViewModel` ➔ `Repository` ➔ `UiState Update` ➔ `UI Rendering`
 
-### 2. Multi-Module Structure
-관심사 분리(SoC)와 빌드 속도 최적화를 위해 기능 및 레이어별로 모듈을 세분화했습니다.
+### 3. Multi-Module Structure
+관심사 분리(SoC)와 빌드 속도 최적화를 위해 기능 및 레이어별로 모듈 간 결합도를 낮추고, 병렬 빌드를 통한 빌드 속도 최적화 및 기능 단위의 독립적인 테스트 환경을 구축했습니다.
 - `:app`: 모든 모듈을 통합하고 의존성 주입의 진입점 역할.
 - `:feature:*`: 기능 단위 모듈 (List, Detail, Favorites). UI 로직 및 ViewModel 포함.
 - `:core:data`: 리포지토리 패턴을 통해 데이터 소스(Network, Database) 관리.
 - `:core:domain`: 비즈니스 로직 및 UseCase 정의.
 - `:core:network` / `:core:database`: 외부 데이터 통신 및 로컬 영속성 관리.
-- `:core:designsystem`: 공통 UI 컴포넌트 및 테마 정의.
+- `:core:ui`: 공통 UI 컴포넌트 및 테마 정의.
 
 ---
 
