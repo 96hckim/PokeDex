@@ -1,0 +1,17 @@
+package com.hckim.pokedex.core.model
+
+data class Pokemon(
+    val id: Int,
+    val name: String,
+    val imageUrl: String,
+    val types: List<PokemonType>,
+    val height: Int = 0,
+    val weight: Int = 0,
+    val stats: List<PokemonStat> = emptyList(),
+    val abilities: List<String> = emptyList()
+)
+
+data class PokemonStat(
+    val name: String,
+    val baseStat: Int
+)

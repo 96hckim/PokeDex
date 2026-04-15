@@ -8,16 +8,12 @@ plugins {
 
 android {
     namespace = "com.hckim.pokedex"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.hckim.pokedex"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -40,6 +36,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:ui"))
+    implementation(project(":feature:list"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:favorites"))
 
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.kotlinx.serialization.json)
@@ -49,27 +51,6 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // Retrofit & OkHttp
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.kotlin.serialization)
-    implementation(libs.okhttp.logging)
-
-    // Room
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    implementation(libs.room.paging)
-    ksp(libs.room.compiler)
-
-    // Coil
-    implementation(libs.coil.kt)
-    implementation(libs.coil.kt.compose)
-    implementation(libs.coil.kt.network.okhttp)
-    implementation(libs.coil.kt.svg)
-
-    // Paging
-    implementation(libs.paging.runtime)
-    implementation(libs.paging.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -1,9 +1,5 @@
 package com.hckim.pokedex
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -12,9 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.hckim.pokedex.ui.pokemon.detail.PokemonDetailScreen
-import com.hckim.pokedex.ui.pokemon.favorites.FavoriteListScreen
-import com.hckim.pokedex.ui.pokemon.list.PokemonListScreen
+import com.hckim.pokedex.feature.detail.PokemonDetailScreen
+import com.hckim.pokedex.feature.favorites.FavoriteListScreen
+import com.hckim.pokedex.feature.list.PokemonListScreen
 
 @Composable
 fun PokeDexNavGraph(
@@ -28,11 +24,7 @@ fun PokeDexNavGraph(
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier,
-        enterTransition = { slideInHorizontally { it } + fadeIn() },
-        exitTransition = { slideOutHorizontally { -it } + fadeOut() },
-        popEnterTransition = { slideInHorizontally { -it } + fadeIn() },
-        popExitTransition = { slideOutHorizontally { it } + fadeOut() }
+        modifier = modifier
     ) {
         composable<Route.PokemonList> {
             PokemonListScreen(

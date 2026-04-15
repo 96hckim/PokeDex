@@ -18,6 +18,7 @@ okhttp = "5.3.2"
 room = "2.8.4"
 coil = "3.4.0"
 paging = "3.4.2"
+kotlinxCoroutines = "1.10.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,12 +48,13 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
-coil-kt = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 coil-kt-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-kt-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
-coil-kt-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
 paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
