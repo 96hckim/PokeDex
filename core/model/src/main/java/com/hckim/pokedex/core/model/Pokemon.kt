@@ -1,5 +1,7 @@
 package com.hckim.pokedex.core.model
 
+import kotlinx.serialization.Serializable
+
 data class Pokemon(
     val id: Int,
     val name: String,
@@ -11,6 +13,7 @@ data class Pokemon(
     val abilities: List<String> = emptyList()
 )
 
+@Serializable
 data class PokemonStat(
     val name: String,
     val baseStat: Int

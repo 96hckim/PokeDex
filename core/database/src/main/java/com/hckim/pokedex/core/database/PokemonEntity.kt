@@ -2,6 +2,7 @@ package com.hckim.pokedex.core.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.hckim.pokedex.core.model.PokemonStat
 import com.hckim.pokedex.core.model.PokemonType
 
 @Entity(tableName = "pokemon")
@@ -11,7 +12,9 @@ data class PokemonEntity(
     val imageUrl: String,
     val types: List<PokemonType>,
     val height: Int,
-    val weight: Int
+    val weight: Int,
+    val stats: List<PokemonStat>,
+    val abilities: List<String>
 )
 
 @Entity(tableName = "remote_keys")

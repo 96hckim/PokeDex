@@ -13,7 +13,9 @@ fun PokemonDto.toEntity(): PokemonEntity {
         imageUrl = sprites.other?.officialArtwork?.frontDefault ?: "",
         types = types.sortedBy { it.slot }.map { PokemonType.fromString(it.type.name) },
         height = height,
-        weight = weight
+        weight = weight,
+        stats = stats.map { PokemonStat(it.stat.name, it.baseStat) },
+        abilities = abilities.map { it.ability.name }
     )
 }
 
@@ -24,7 +26,9 @@ fun PokemonEntity.toDomain(): Pokemon {
         imageUrl = imageUrl,
         types = types,
         height = height,
-        weight = weight
+        weight = weight,
+        stats = stats,
+        abilities = abilities
     )
 }
 

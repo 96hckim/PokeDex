@@ -46,8 +46,15 @@ class PokemonRepositoryImpl @Inject constructor(
 
     override suspend fun getPokemonDetails(name: String): Result<Pokemon> {
         return try {
-            val response = api.getPokemonDetails(name)
-            Result.success(response.toDomain())
+            val localPokemon = db.pokemonDao().getPokemonByName(name)
+            if (localPokemon != null) {
+                Result.success(localPokemon.toDomain())
+            } else {
+                val response = api.getPokemonDetails(name)
+                val entity = response.toEntity()
+                db.pokemonDao().insertAll(listOf(entity))
+                Result.success(entity.toDomain())
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }

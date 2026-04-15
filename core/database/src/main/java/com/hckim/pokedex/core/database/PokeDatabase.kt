@@ -10,7 +10,7 @@ import androidx.room.TypeConverters
         RemoteKeyEntity::class,
         FavoriteEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(PokemonTypeConverter::class)
