@@ -1,34 +1,23 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.pokedex.android.library)
+    alias(libs.plugins.pokedex.android.room)
+    alias(libs.plugins.pokedex.hilt)
 }
 
 android {
     namespace = "com.hckim.pokedex.core.data"
-    compileSdk = 37
-
-    defaultConfig {
-        minSdk = 26
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:network"))
-    implementation(project(":core:database"))
+    api(projects.core.common)
+    api(projects.core.database)
+    api(projects.core.domain)
+    api(projects.core.network)
+    api(projects.core.model)
 
     implementation(libs.paging.runtime)
-    implementation(libs.room.paging)
-    implementation(libs.room.ktx)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.serialization.json)
 }
-

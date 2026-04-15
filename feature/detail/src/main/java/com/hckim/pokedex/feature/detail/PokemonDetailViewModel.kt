@@ -2,7 +2,7 @@ package com.hckim.pokedex.feature.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hckim.pokedex.core.common.MviViewModel
+import com.hckim.pokedex.core.common.base.MviViewModel
 import com.hckim.pokedex.core.domain.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

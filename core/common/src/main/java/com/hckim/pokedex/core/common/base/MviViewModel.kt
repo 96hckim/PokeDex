@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.common
+package com.hckim.pokedex.core.common.base
 
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow

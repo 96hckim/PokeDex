@@ -1,5 +1,6 @@
 package com.hckim.pokedex.core.network.di
 
+import com.hckim.pokedex.core.network.BuildConfig
 import com.hckim.pokedex.core.network.PokemonApi
 import dagger.Module
 import dagger.Provides
@@ -12,6 +13,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
+
+private const val POKEDEX_BASE_URL = BuildConfig.BACKEND_URL
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,7 +41,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
+            .baseUrl(POKEDEX_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()

@@ -1,8 +1,8 @@
 package com.hckim.pokedex.feature.favorites
 
-import com.hckim.pokedex.core.common.UiEffect
-import com.hckim.pokedex.core.common.UiIntent
-import com.hckim.pokedex.core.common.UiState
+import com.hckim.pokedex.core.common.base.UiEffect
+import com.hckim.pokedex.core.common.base.UiIntent
+import com.hckim.pokedex.core.common.base.UiState
 import com.hckim.pokedex.core.model.Pokemon
 
 data class FavoriteListUiState(

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.hckim.pokedex.core.common.MviViewModel
+import com.hckim.pokedex.core.common.base.MviViewModel
 import com.hckim.pokedex.core.domain.PokemonRepository
 import com.hckim.pokedex.core.model.Pokemon
 import dagger.hilt.android.lifecycle.HiltViewModel

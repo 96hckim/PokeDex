@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.pokedex.jvm.library)
 }
 
 dependencies {
-    implementation(project(":core:model"))
+    api(projects.core.model)
+
     implementation(libs.paging.common)
-    implementation(libs.kotlinx.coroutines.core)
 }
