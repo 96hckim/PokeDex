@@ -16,7 +16,7 @@ interface PokemonDao {
         """
     SELECT * FROM pokemon 
     WHERE name LIKE '%' || :query || '%' 
-    AND (:type IS NULL OR types LIKE '%"type":"' || :type || '"%') 
+    AND (:type IS NULL OR types LIKE '%' || :type || '%')
     ORDER BY id ASC
 """
     )

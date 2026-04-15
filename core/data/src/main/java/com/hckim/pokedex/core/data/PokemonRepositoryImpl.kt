@@ -18,7 +18,8 @@ import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
     private val api: PokemonApi,
-    private val db: PokeDatabase
+    private val db: PokeDatabase,
+    private val remoteMediator: PokemonRemoteMediator
 ) : PokemonRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -27,7 +28,7 @@ class PokemonRepositoryImpl @Inject constructor(
 
         return Pager(
             config = PAGING_CONFIG,
-            remoteMediator = if (isSearching) null else PokemonRemoteMediator(api, db),
+            remoteMediator = if (isSearching) null else remoteMediator,
             pagingSourceFactory = { db.pokemonDao().pagingSource(query, type?.name) }
         ).flow.map { pagingData ->
             pagingData.map { it.toDomain() }

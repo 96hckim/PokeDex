@@ -12,9 +12,10 @@ import com.hckim.pokedex.core.network.PokemonApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class PokemonRemoteMediator(
+class PokemonRemoteMediator @Inject constructor(
     private val api: PokemonApi,
     private val db: PokeDatabase
 ) : RemoteMediator<Int, PokemonEntity>() {
