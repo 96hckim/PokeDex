@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,7 +61,7 @@ fun PokemonCard(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.5f)
+            .aspectRatio(1.4f)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -70,7 +69,7 @@ fun PokemonCard(
             modifier = Modifier
                 .fillMaxSize()
                 .background(backgroundBrush)
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             IconButton(
                 onClick = onFavoriteClick,
@@ -82,61 +81,49 @@ fun PokemonCard(
                     imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     contentDescription = "Favorite",
                     tint = Color.White,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
 
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Bottom
             ) {
                 Column(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
                         text = "#${pokemon.id.toString().padStart(3, '0')}",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = Color.White.copy(alpha = 0.8f),
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Color.White.copy(alpha = 0.8f)
                     )
                     Text(
                         text = pokemon.name.replaceFirstChar { it.uppercase() },
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
                         color = Color.White,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     pokemon.types.forEach { type ->
                         TypeBadge(type = type)
                     }
                 }
 
-                Box(
-                    modifier = Modifier.size(110.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(pokemon.imageUrl)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = pokemon.name,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.fillMaxSize()
-                    )
-
-                    if (LocalInspectionMode.current) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize(0.8f)
-                                .background(Color.White.copy(alpha = 0.2f), RoundedCornerShape(50))
-                        )
-                    }
-                }
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(pokemon.imageUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = pokemon.name,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.size(70.dp)
+                )
             }
         }
     }
