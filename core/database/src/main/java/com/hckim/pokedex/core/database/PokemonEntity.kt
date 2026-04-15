@@ -3,20 +3,13 @@ package com.hckim.pokedex.core.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.hckim.pokedex.core.model.PokemonType
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class PokemonTypeEntity(
-    val type: PokemonType,
-    val slot: Int
-)
 
 @Entity(tableName = "pokemon")
 data class PokemonEntity(
     @PrimaryKey val id: Int,
     val name: String,
     val imageUrl: String,
-    val types: List<PokemonTypeEntity>,
+    val types: List<PokemonType>,
     val height: Int,
     val weight: Int
 )

@@ -1,7 +1,6 @@
 package com.hckim.pokedex.core.data
 
 import com.hckim.pokedex.core.database.PokemonEntity
-import com.hckim.pokedex.core.database.PokemonTypeEntity
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonStat
 import com.hckim.pokedex.core.model.PokemonType
@@ -12,7 +11,7 @@ fun PokemonDto.toEntity(): PokemonEntity {
         id = id,
         name = name,
         imageUrl = sprites.other?.officialArtwork?.frontDefault ?: "",
-        types = types.map { PokemonTypeEntity(PokemonType.fromString(it.type.name), it.slot) },
+        types = types.sortedBy { it.slot }.map { PokemonType.fromString(it.type.name) },
         height = height,
         weight = weight
     )
@@ -23,7 +22,7 @@ fun PokemonEntity.toDomain(): Pokemon {
         id = id,
         name = name,
         imageUrl = imageUrl,
-        types = types.sortedBy { it.slot }.map { it.type },
+        types = types,
         height = height,
         weight = weight
     )
