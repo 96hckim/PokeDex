@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -216,5 +217,35 @@ fun LoadingIndicator() {
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TypeFilterRowPreview() {
+    MaterialTheme {
+        TypeFilterRow(
+            selectedType = PokemonType.GRASS,
+            onTypeSelected = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchBarPreview() {
+    MaterialTheme {
+        SearchBar(
+            query = "Pikachu",
+            onQueryChange = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingIndicatorPreview() {
+    MaterialTheme {
+        LoadingIndicator()
     }
 }

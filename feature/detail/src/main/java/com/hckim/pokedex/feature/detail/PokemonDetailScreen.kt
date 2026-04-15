@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -282,5 +283,37 @@ fun AbilityBadge(ability: String) {
             fontWeight = FontWeight.Medium,
             color = Color.DarkGray
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DetailTypeBadgePreview() {
+    MaterialTheme {
+        DetailTypeBadge(type = PokemonType.FIRE)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun StatBarPreview() {
+    MaterialTheme {
+        StatBar(statName = "HP", statValue = 45, color = Color.Red)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InfoItemPreview() {
+    MaterialTheme {
+        InfoItem(label = "Weight", value = "6.9 kg")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AbilityBadgePreview() {
+    MaterialTheme {
+        AbilityBadge(ability = "overgrow")
     }
 }
