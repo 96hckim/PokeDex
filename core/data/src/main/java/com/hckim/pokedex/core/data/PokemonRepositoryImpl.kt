@@ -23,14 +23,11 @@ class PokemonRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getPokemonList(query: String, type: PokemonType?): Flow<PagingData<Pokemon>> {
+        val isSearching = query.isNotEmpty() || type != null
+
         return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                prefetchDistance = 5,
-                enablePlaceholders = false,
-                initialLoadSize = 40
-            ),
-            remoteMediator = PokemonRemoteMediator(api, db),
+            config = PAGING_CONFIG,
+            remoteMediator = if (isSearching) null else PokemonRemoteMediator(api, db),
             pagingSourceFactory = { db.pokemonDao().pagingSource(query, type?.name) }
         ).flow.map { pagingData ->
             pagingData.map { it.toDomain() }
@@ -39,10 +36,7 @@ class PokemonRepositoryImpl @Inject constructor(
 
     override fun getFavoritePokemonList(): Flow<PagingData<Pokemon>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = false
-            ),
+            config = PAGING_CONFIG,
             pagingSourceFactory = { db.pokemonDao().favoritesPagingSource() }
         ).flow.map { pagingData ->
             pagingData.map { it.toDomain() }
@@ -73,5 +67,14 @@ class PokemonRepositoryImpl @Inject constructor(
 
     override fun isFavorite(id: Int): Flow<Boolean> {
         return db.pokemonDao().isFavorite(id)
+    }
+
+    companion object {
+        private val PAGING_CONFIG = PagingConfig(
+            pageSize = 20,
+            prefetchDistance = 5,
+            initialLoadSize = 40,
+            enablePlaceholders = false
+        )
     }
 }
