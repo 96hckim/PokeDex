@@ -65,8 +65,8 @@ fun PokemonListScreen(
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PokemonListViewEffect.NavigateToDetail -> onNavigateToDetail(effect.pokemonName)
-                is PokemonListViewEffect.ShowError -> {
+                is PokemonListUiEffect.NavigateToDetail -> onNavigateToDetail(effect.pokemonName)
+                is PokemonListUiEffect.ShowError -> {
                     snackbarHostState.showSnackbar(effect.message)
                 }
             }
@@ -89,14 +89,14 @@ fun PokemonListScreen(
                 )
                 SearchBar(
                     query = uiState.searchQuery,
-                    onQueryChange = { viewModel.onIntent(PokemonListViewIntent.Search(it)) },
+                    onQueryChange = { viewModel.onIntent(PokemonListUiIntent.Search(it)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 TypeFilterRow(
                     selectedType = uiState.selectedType,
-                    onTypeSelected = { viewModel.onIntent(PokemonListViewIntent.FilterByType(it)) },
+                    onTypeSelected = { viewModel.onIntent(PokemonListUiIntent.FilterByType(it)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 8.dp)
@@ -139,8 +139,8 @@ fun PokemonListScreen(
                             PokemonCard(
                                 pokemon = pokemon,
                                 isFavorite = uiState.favoriteIds.contains(pokemon.id),
-                                onClick = { viewModel.onIntent(PokemonListViewIntent.Click(pokemon)) },
-                                onFavoriteClick = { viewModel.onIntent(PokemonListViewIntent.ToggleFavorite(pokemon)) }
+                                onClick = { viewModel.onIntent(PokemonListUiIntent.Click(pokemon)) },
+                                onFavoriteClick = { viewModel.onIntent(PokemonListUiIntent.ToggleFavorite(pokemon)) }
                             )
                         }
                     }

@@ -22,13 +22,13 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteListViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), MviViewModel<FavoriteListViewState, FavoriteListViewIntent, FavoriteListViewEffect> {
+) : ViewModel(), MviViewModel<FavoriteListUiState, FavoriteListUiIntent, FavoriteListUiEffect> {
 
-    private val _uiState = MutableStateFlow(FavoriteListViewState())
-    override val uiState: StateFlow<FavoriteListViewState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(FavoriteListUiState())
+    override val uiState: StateFlow<FavoriteListUiState> = _uiState.asStateFlow()
 
-    private val _effect = MutableSharedFlow<FavoriteListViewEffect>()
-    override val effect: SharedFlow<FavoriteListViewEffect> = _effect.asSharedFlow()
+    private val _effect = MutableSharedFlow<FavoriteListUiEffect>()
+    override val effect: SharedFlow<FavoriteListUiEffect> = _effect.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -42,15 +42,15 @@ class FavoriteListViewModel @Inject constructor(
         .getFavoritePokemonList()
         .cachedIn(viewModelScope)
 
-    override fun onIntent(intent: FavoriteListViewIntent) {
+    override fun onIntent(intent: FavoriteListUiIntent) {
         when (intent) {
-            is FavoriteListViewIntent.ClickPokemon -> {
+            is FavoriteListUiIntent.ClickPokemon -> {
                 viewModelScope.launch {
-                    _effect.emit(FavoriteListViewEffect.NavigateToDetail(intent.pokemon.name))
+                    _effect.emit(FavoriteListUiEffect.NavigateToDetail(intent.pokemon.name))
                 }
             }
 
-            is FavoriteListViewIntent.ToggleFavorite -> {
+            is FavoriteListUiIntent.ToggleFavorite -> {
                 viewModelScope.launch {
                     repository.toggleFavorite(intent.pokemon)
                 }

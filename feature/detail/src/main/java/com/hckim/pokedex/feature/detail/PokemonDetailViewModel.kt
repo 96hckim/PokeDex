@@ -18,17 +18,17 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonDetailViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), MviViewModel<PokemonDetailViewState, PokemonDetailViewIntent, PokemonDetailViewEffect> {
+) : ViewModel(), MviViewModel<PokemonDetailUiState, PokemonDetailUiIntent, PokemonDetailUiEffect> {
 
-    private val _uiState = MutableStateFlow(PokemonDetailViewState())
-    override val uiState: StateFlow<PokemonDetailViewState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(PokemonDetailUiState())
+    override val uiState: StateFlow<PokemonDetailUiState> = _uiState.asStateFlow()
 
-    private val _effect = MutableSharedFlow<PokemonDetailViewEffect>()
-    override val effect: SharedFlow<PokemonDetailViewEffect> = _effect.asSharedFlow()
+    private val _effect = MutableSharedFlow<PokemonDetailUiEffect>()
+    override val effect: SharedFlow<PokemonDetailUiEffect> = _effect.asSharedFlow()
 
-    override fun onIntent(intent: PokemonDetailViewIntent) {
+    override fun onIntent(intent: PokemonDetailUiIntent) {
         when (intent) {
-            is PokemonDetailViewIntent.LoadPokemon -> {
+            is PokemonDetailUiIntent.LoadPokemon -> {
                 loadPokemon(intent.name)
             }
         }

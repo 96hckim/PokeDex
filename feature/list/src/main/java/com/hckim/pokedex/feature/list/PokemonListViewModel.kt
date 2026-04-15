@@ -26,13 +26,13 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
     private val repository: PokemonRepository
-) : ViewModel(), MviViewModel<PokemonListViewState, PokemonListViewIntent, PokemonListViewEffect> {
+) : ViewModel(), MviViewModel<PokemonListUiState, PokemonListUiIntent, PokemonListUiEffect> {
 
-    private val _uiState = MutableStateFlow(PokemonListViewState())
-    override val uiState: StateFlow<PokemonListViewState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(PokemonListUiState())
+    override val uiState: StateFlow<PokemonListUiState> = _uiState.asStateFlow()
 
-    private val _effect = MutableSharedFlow<PokemonListViewEffect>()
-    override val effect: SharedFlow<PokemonListViewEffect> = _effect.asSharedFlow()
+    private val _effect = MutableSharedFlow<PokemonListUiEffect>()
+    override val effect: SharedFlow<PokemonListUiEffect> = _effect.asSharedFlow()
 
     private val _searchParams = MutableStateFlow(SearchParams())
 
@@ -50,31 +50,31 @@ class PokemonListViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
-    override fun onIntent(intent: PokemonListViewIntent) {
+    override fun onIntent(intent: PokemonListUiIntent) {
         when (intent) {
-            is PokemonListViewIntent.Search -> {
+            is PokemonListUiIntent.Search -> {
                 _uiState.update { it.copy(searchQuery = intent.query) }
                 _searchParams.update { it.copy(query = intent.query) }
             }
 
-            is PokemonListViewIntent.FilterByType -> {
+            is PokemonListUiIntent.FilterByType -> {
                 _uiState.update { it.copy(selectedType = intent.type) }
                 _searchParams.update { it.copy(type = intent.type) }
             }
 
-            is PokemonListViewIntent.Click -> {
+            is PokemonListUiIntent.Click -> {
                 viewModelScope.launch {
-                    _effect.emit(PokemonListViewEffect.NavigateToDetail(intent.pokemon.name))
+                    _effect.emit(PokemonListUiEffect.NavigateToDetail(intent.pokemon.name))
                 }
             }
 
-            is PokemonListViewIntent.ToggleFavorite -> {
+            is PokemonListUiIntent.ToggleFavorite -> {
                 viewModelScope.launch {
                     repository.toggleFavorite(intent.pokemon)
                 }
             }
 
-            PokemonListViewIntent.Refresh -> {
+            PokemonListUiIntent.Refresh -> {
                 // Paging 3 handles refresh through the adapter
             }
         }

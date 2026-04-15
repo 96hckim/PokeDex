@@ -6,22 +6,22 @@ import com.hckim.pokedex.core.common.UiState
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonType
 
-data class PokemonListViewState(
+data class PokemonListUiState(
     val isLoading: Boolean = false,
     val searchQuery: String = "",
     val selectedType: PokemonType? = null,
     val favoriteIds: List<Int> = emptyList()
 ) : UiState
 
-sealed interface PokemonListViewIntent : UiIntent {
-    data class Search(val query: String) : PokemonListViewIntent
-    data class FilterByType(val type: PokemonType?) : PokemonListViewIntent
-    data class Click(val pokemon: Pokemon) : PokemonListViewIntent
-    data class ToggleFavorite(val pokemon: Pokemon) : PokemonListViewIntent
-    data object Refresh : PokemonListViewIntent
+sealed interface PokemonListUiIntent : UiIntent {
+    data class Search(val query: String) : PokemonListUiIntent
+    data class FilterByType(val type: PokemonType?) : PokemonListUiIntent
+    data class Click(val pokemon: Pokemon) : PokemonListUiIntent
+    data class ToggleFavorite(val pokemon: Pokemon) : PokemonListUiIntent
+    data object Refresh : PokemonListUiIntent
 }
 
-sealed interface PokemonListViewEffect : UiEffect {
-    data class NavigateToDetail(val pokemonName: String) : PokemonListViewEffect
-    data class ShowError(val message: String) : PokemonListViewEffect
+sealed interface PokemonListUiEffect : UiEffect {
+    data class NavigateToDetail(val pokemonName: String) : PokemonListUiEffect
+    data class ShowError(val message: String) : PokemonListUiEffect
 }

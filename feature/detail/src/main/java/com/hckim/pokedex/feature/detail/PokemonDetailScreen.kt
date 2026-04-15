@@ -55,7 +55,7 @@ fun PokemonDetailScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(pokemonName) {
-        viewModel.onIntent(PokemonDetailViewIntent.LoadPokemon(pokemonName))
+        viewModel.onIntent(PokemonDetailUiIntent.LoadPokemon(pokemonName))
     }
 
     Scaffold(

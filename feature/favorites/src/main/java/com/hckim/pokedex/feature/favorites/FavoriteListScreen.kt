@@ -45,7 +45,7 @@ fun FavoriteListScreen(
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is FavoriteListViewEffect.NavigateToDetail -> onNavigateToDetail(effect.pokemonName)
+                is FavoriteListUiEffect.NavigateToDetail -> onNavigateToDetail(effect.pokemonName)
             }
         }
     }
@@ -96,8 +96,8 @@ fun FavoriteListScreen(
                             PokemonCard(
                                 pokemon = pokemon,
                                 isFavorite = uiState.favoriteIds.contains(pokemon.id),
-                                onClick = { viewModel.onIntent(FavoriteListViewIntent.ClickPokemon(pokemon)) },
-                                onFavoriteClick = { viewModel.onIntent(FavoriteListViewIntent.ToggleFavorite(pokemon)) }
+                                onClick = { viewModel.onIntent(FavoriteListUiIntent.ClickPokemon(pokemon)) },
+                                onFavoriteClick = { viewModel.onIntent(FavoriteListUiIntent.ToggleFavorite(pokemon)) }
                             )
                         }
                     }

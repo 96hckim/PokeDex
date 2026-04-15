@@ -5,15 +5,15 @@ import com.hckim.pokedex.core.common.UiIntent
 import com.hckim.pokedex.core.common.UiState
 import com.hckim.pokedex.core.model.Pokemon
 
-data class FavoriteListViewState(
+data class FavoriteListUiState(
     val favoriteIds: List<Int> = emptyList()
 ) : UiState
 
-sealed interface FavoriteListViewIntent : UiIntent {
-    data class ClickPokemon(val pokemon: Pokemon) : FavoriteListViewIntent
-    data class ToggleFavorite(val pokemon: Pokemon) : FavoriteListViewIntent
+sealed interface FavoriteListUiIntent : UiIntent {
+    data class ClickPokemon(val pokemon: Pokemon) : FavoriteListUiIntent
+    data class ToggleFavorite(val pokemon: Pokemon) : FavoriteListUiIntent
 }
 
-sealed interface FavoriteListViewEffect : UiEffect {
-    data class NavigateToDetail(val pokemonName: String) : FavoriteListViewEffect
+sealed interface FavoriteListUiEffect : UiEffect {
+    data class NavigateToDetail(val pokemonName: String) : FavoriteListUiEffect
 }
