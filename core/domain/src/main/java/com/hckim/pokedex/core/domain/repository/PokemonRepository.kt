@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.domain
+package com.hckim.pokedex.core.domain.repository
 
 import androidx.paging.PagingData
 import com.hckim.pokedex.core.model.Pokemon

@@ -3,7 +3,7 @@ package com.hckim.pokedex.feature.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hckim.pokedex.core.common.base.MviViewModel
-import com.hckim.pokedex.core.domain.PokemonRepository
+import com.hckim.pokedex.core.domain.usecase.GetPokemonDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonDetailViewModel @Inject constructor(
-    private val repository: PokemonRepository
+    private val getPokemonDetailsUseCase: GetPokemonDetailsUseCase
 ) : ViewModel(), MviViewModel<PokemonDetailUiState, PokemonDetailUiIntent, PokemonDetailUiEffect> {
 
     private val _uiState = MutableStateFlow(PokemonDetailUiState())
@@ -37,7 +37,7 @@ class PokemonDetailViewModel @Inject constructor(
     private fun loadPokemon(name: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            repository.getPokemonDetails(name)
+            getPokemonDetailsUseCase(name)
                 .onSuccess { pokemon ->
                     _uiState.update { it.copy(pokemon = pokemon, isLoading = false) }
                 }

@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hckim.pokedex.core.common.base.MviViewModel
-import com.hckim.pokedex.core.domain.PokemonRepository
+import com.hckim.pokedex.core.domain.usecase.GetFavoriteIdsUseCase
+import com.hckim.pokedex.core.domain.usecase.GetFavoritePokemonListUseCase
+import com.hckim.pokedex.core.domain.usecase.ToggleFavoriteUseCase
 import com.hckim.pokedex.core.model.Pokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +23,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteListViewModel @Inject constructor(
-    private val repository: PokemonRepository
+    getFavoritePokemonListUseCase: GetFavoritePokemonListUseCase,
+    private val getFavoriteIdsUseCase: GetFavoriteIdsUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel(), MviViewModel<FavoriteListUiState, FavoriteListUiIntent, FavoriteListUiEffect> {
 
     private val _uiState = MutableStateFlow(FavoriteListUiState())
@@ -32,14 +36,13 @@ class FavoriteListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.getFavoriteIds().collect { ids ->
+            getFavoriteIdsUseCase().collect { ids ->
                 _uiState.update { it.copy(favoriteIds = ids) }
             }
         }
     }
 
-    val favoritePokemonPagingData: Flow<PagingData<Pokemon>> = repository
-        .getFavoritePokemonList()
+    val favoritePokemonPagingData: Flow<PagingData<Pokemon>> = getFavoritePokemonListUseCase()
         .cachedIn(viewModelScope)
 
     override fun onIntent(intent: FavoriteListUiIntent) {
@@ -52,7 +55,7 @@ class FavoriteListViewModel @Inject constructor(
 
             is FavoriteListUiIntent.ToggleFavorite -> {
                 viewModelScope.launch {
-                    repository.toggleFavorite(intent.pokemon)
+                    toggleFavoriteUseCase(intent.pokemon)
                 }
             }
         }

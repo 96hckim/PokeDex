@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.hckim.pokedex.core.database.FavoriteEntity
 import com.hckim.pokedex.core.database.PokeDatabase
-import com.hckim.pokedex.core.domain.PokemonRepository
+import com.hckim.pokedex.core.domain.repository.PokemonRepository
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonType
 import com.hckim.pokedex.core.network.PokemonApi
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class PokemonRepositoryImpl @Inject constructor(
+class DefaultPokemonRepository @Inject constructor(
     private val api: PokemonApi,
     private val db: PokeDatabase,
     private val remoteMediator: PokemonRemoteMediator

@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hckim.pokedex.core.common.base.MviViewModel
-import com.hckim.pokedex.core.domain.PokemonRepository
+import com.hckim.pokedex.core.domain.usecase.GetFavoriteIdsUseCase
+import com.hckim.pokedex.core.domain.usecase.GetPokemonListUseCase
+import com.hckim.pokedex.core.domain.usecase.ToggleFavoriteUseCase
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +27,9 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
-    private val repository: PokemonRepository
+    private val getPokemonListUseCase: GetPokemonListUseCase,
+    private val getFavoriteIdsUseCase: GetFavoriteIdsUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : ViewModel(), MviViewModel<PokemonListUiState, PokemonListUiIntent, PokemonListUiEffect> {
 
     private val _uiState = MutableStateFlow(PokemonListUiState())
@@ -38,7 +42,7 @@ class PokemonListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.getFavoriteIds().collect { ids ->
+            getFavoriteIdsUseCase().collect { ids ->
                 _uiState.update { it.copy(favoriteIds = ids) }
             }
         }
@@ -46,7 +50,7 @@ class PokemonListViewModel @Inject constructor(
 
     val pokemonPagingData: Flow<PagingData<Pokemon>> = _searchParams
         .flatMapLatest { params ->
-            repository.getPokemonList(params.query, params.type)
+            getPokemonListUseCase(params.query, params.type)
         }
         .cachedIn(viewModelScope)
 
@@ -70,7 +74,7 @@ class PokemonListViewModel @Inject constructor(
 
             is PokemonListUiIntent.ToggleFavorite -> {
                 viewModelScope.launch {
-                    repository.toggleFavorite(intent.pokemon)
+                    toggleFavoriteUseCase(intent.pokemon)
                 }
             }
 

@@ -1,7 +1,7 @@
 package com.hckim.pokedex.core.data.di
 
-import com.hckim.pokedex.core.data.PokemonRepositoryImpl
-import com.hckim.pokedex.core.domain.PokemonRepository
+import com.hckim.pokedex.core.data.DefaultPokemonRepository
+import com.hckim.pokedex.core.domain.repository.PokemonRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindPokemonRepository(
-        pokemonRepositoryImpl: PokemonRepositoryImpl
+        defaultPokemonRepository: DefaultPokemonRepository
     ): PokemonRepository
 }
