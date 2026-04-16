@@ -45,13 +45,17 @@
 - **[Data Flow]** `User Intent` ➔ `ViewModel` ➔ `Repository` ➔ `UiState Update` ➔ `UI Rendering`
 
 ### 3. Multi-Module Structure
-관심사 분리(SoC)와 빌드 속도 최적화를 위해 기능 및 레이어별로 모듈 간 결합도를 낮추고, 병렬 빌드를 통한 빌드 속도 최적화 및 기능 단위의 독립적인 테스트 환경을 구축했습니다.
-- `:app`: 모든 모듈을 통합하고 의존성 주입의 진입점 역할.
-- `:feature:*`: 기능 단위 모듈 (List, Detail, Favorites). UI 로직 및 ViewModel 포함.
-- `:core:data`: 리포지토리 패턴을 통해 데이터 소스(Network, Database) 관리.
-- `:core:domain`: 비즈니스 로직 및 UseCase 정의.
-- `:core:network` / `:core:database`: 외부 데이터 통신 및 로컬 영속성 관리.
-- `:core:ui`: 공통 UI 컴포넌트 및 테마 정의.
+관심사 분리(SoC)를 극대화하고 병렬 빌드 효율을 높이기 위해 레이어 기반의 멀티 모듈 구조를 채택했습니다. 각 모듈은 독립적인 테스트 환경을 가지며, 기능 단위의 모듈화를 통해 코드 재사용성을 높였습니다.
+- **`app`**: 앱의 진입점. 모든 모듈을 통합하며 Hilt를 이용한 의존성 주입(DI) 설정 및 네비게이션 관리.
+- **`feature:*`**: 기능 단위 모듈 (`list`, `detail`, `favorites`). UI 로직(Compose) 및 ViewModel 포함.
+- **`core:common`**: 프로젝트 전반에서 재사용되는 확장 함수, 유틸리티 및 공통 인터페이스.
+- **`core:data`**: 리포지토리 패턴을 통해 다양한 데이터 소스(Network, Database)를 통합 및 관리.
+- **`core:database`**: Room 기반의 로컬 영속성 관리 및 데이터베이스 엔티티 정의.
+- **`core:designsystem`**: 공통 UI 컴포넌트, 테마(Color, Typography), 디자인 가이드라인 정의.
+- **`core:domain`**: 비즈니스 로직 및 UseCase 정의. 프레임워크 의존성이 없는 Pure Kotlin 모듈.
+- **`core:model`**: 프로젝트 전반에서 사용되는 공통 도메인 모델 및 Enum 정의.
+- **`core:network`**: Retrofit 기반의 외부 API 통신 및 네트워크 데이터 모델 정의.
+- **`core:ui`**: 디자인 시스템 기반의 공통 UI 컴포넌트 및 복합 UI 로직 관리.
 
 ---
 
