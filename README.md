@@ -47,7 +47,7 @@
 ### 3. Multi-Module Structure
 관심사 분리(SoC)를 극대화하고 병렬 빌드 효율을 높이기 위해 레이어 기반의 멀티 모듈 구조를 채택했습니다. 각 모듈은 독립적인 테스트 환경을 가지며, 기능 단위의 모듈화를 통해 코드 재사용성을 높였습니다.
 - **`app`**: 앱의 진입점. 모든 모듈을 통합하며 Hilt를 이용한 의존성 주입(DI) 설정 및 네비게이션 관리.
-- **`feature:*`**: 기능 단위 모듈 (`list`, `detail`, `favorites`). UI 로직(Compose) 및 ViewModel 포함.
+- **`build-logic`**: **Convention Plugins**를 포함한 빌드 인프라 모듈. Kotlin DSL을 기반으로 모듈 간 공통 빌드 로직을 캡슐화하여 빌드 설정의 일관성 유지.
 - **`core:common`**: 프로젝트 전반에서 재사용되는 확장 함수, 유틸리티 및 공통 인터페이스.
 - **`core:data`**: 리포지토리 패턴을 통해 다양한 데이터 소스(Network, Database)를 통합 및 관리.
 - **`core:database`**: Room 기반의 로컬 영속성 관리 및 데이터베이스 엔티티 정의.
@@ -56,6 +56,7 @@
 - **`core:model`**: 프로젝트 전반에서 사용되는 공통 도메인 모델 및 Enum 정의.
 - **`core:network`**: Retrofit 기반의 외부 API 통신 및 네트워크 데이터 모델 정의.
 - **`core:ui`**: 디자인 시스템 기반의 공통 UI 컴포넌트 및 복합 UI 로직 관리.
+- **`feature:*`**: 기능 단위 모듈 (`list`, `detail`, `favorites`). UI 로직(Compose) 및 ViewModel 포함.
 
 ---
 
