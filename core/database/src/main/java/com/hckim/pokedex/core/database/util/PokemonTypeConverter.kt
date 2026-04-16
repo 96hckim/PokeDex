@@ -1,20 +1,20 @@
-package com.hckim.pokedex.core.database
+package com.hckim.pokedex.core.database.util
 
 import androidx.room.TypeConverter
-import com.hckim.pokedex.core.model.PokemonStat
-import com.hckim.pokedex.core.model.PokemonType
+import com.hckim.pokedex.core.database.model.PokemonStatEntity
+import com.hckim.pokedex.core.database.model.PokemonTypeEntity
 import kotlinx.serialization.json.Json
 
-class PokemonTypeConverter {
+internal class PokemonTypeConverter {
     private val json = Json { ignoreUnknownKeys = true }
 
     @TypeConverter
-    fun fromPokemonTypeList(value: List<PokemonType>): String {
+    fun fromPokemonTypeList(value: List<PokemonTypeEntity>): String {
         return json.encodeToString(value)
     }
 
     @TypeConverter
-    fun toPokemonTypeList(value: String): List<PokemonType> {
+    fun toPokemonTypeList(value: String): List<PokemonTypeEntity> {
         return try {
             json.decodeFromString(value)
         } catch (e: Exception) {
@@ -23,12 +23,12 @@ class PokemonTypeConverter {
     }
 
     @TypeConverter
-    fun fromPokemonStatList(value: List<PokemonStat>): String {
+    fun fromPokemonStatList(value: List<PokemonStatEntity>): String {
         return json.encodeToString(value)
     }
 
     @TypeConverter
-    fun toPokemonStatList(value: String): List<PokemonStat> {
+    fun toPokemonStatList(value: String): List<PokemonStatEntity> {
         return try {
             json.decodeFromString(value)
         } catch (e: Exception) {

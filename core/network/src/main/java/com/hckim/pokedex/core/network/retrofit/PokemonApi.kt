@@ -1,5 +1,7 @@
-package com.hckim.pokedex.core.network
+package com.hckim.pokedex.core.network.retrofit
 
+import com.hckim.pokedex.core.network.model.PokemonDto
+import com.hckim.pokedex.core.network.model.PokemonListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -1,8 +1,5 @@
 package com.hckim.pokedex.core.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 enum class PokemonType(
     val displayName: String,
     val colorHex: Long

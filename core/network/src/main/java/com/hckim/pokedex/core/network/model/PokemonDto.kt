@@ -1,5 +1,8 @@
-package com.hckim.pokedex.core.network
+package com.hckim.pokedex.core.network.model
 
+import com.hckim.pokedex.core.database.model.PokemonEntity
+import com.hckim.pokedex.core.database.model.PokemonStatEntity
+import com.hckim.pokedex.core.database.model.PokemonTypeEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -28,6 +31,19 @@ data class PokemonDto(
     @SerialName("types") val types: List<PokemonTypeDto>,
     @SerialName("abilities") val abilities: List<PokemonAbilityDto>
 )
+
+fun PokemonDto.asEntity(): PokemonEntity {
+    return PokemonEntity(
+        id = id,
+        name = name,
+        imageUrl = sprites.other?.officialArtwork?.frontDefault ?: "",
+        types = types.sortedBy { it.slot }.map { PokemonTypeEntity(it.type.name) },
+        height = height,
+        weight = weight,
+        stats = stats.map { PokemonStatEntity(it.stat.name, it.baseStat) },
+        abilities = abilities.map { it.ability.name }
+    )
+}
 
 @Serializable
 data class PokemonSpritesDto(

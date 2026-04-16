@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.data
+package com.hckim.pokedex.core.data.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -6,16 +6,17 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.hckim.pokedex.core.database.PokeDatabase
-import com.hckim.pokedex.core.database.PokemonEntity
-import com.hckim.pokedex.core.database.RemoteKeyEntity
-import com.hckim.pokedex.core.network.PokemonApi
+import com.hckim.pokedex.core.database.model.PokemonEntity
+import com.hckim.pokedex.core.database.model.RemoteKeyEntity
+import com.hckim.pokedex.core.network.model.asEntity
+import com.hckim.pokedex.core.network.retrofit.PokemonApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class PokemonRemoteMediator @Inject constructor(
+internal class PokemonRemoteMediator @Inject constructor(
     private val api: PokemonApi,
     private val db: PokeDatabase
 ) : RemoteMediator<Int, PokemonEntity>() {
@@ -62,7 +63,7 @@ class PokemonRemoteMediator @Inject constructor(
 
             val entities = coroutineScope {
                 response.results.map { resource ->
-                    async { api.getPokemonDetails(resource.name).toEntity() }
+                    async { api.getPokemonDetails(resource.name).asEntity() }
                 }.awaitAll()
             }
 

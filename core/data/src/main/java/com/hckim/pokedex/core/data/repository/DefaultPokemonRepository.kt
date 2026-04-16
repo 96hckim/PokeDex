@@ -1,22 +1,25 @@
-package com.hckim.pokedex.core.data
+package com.hckim.pokedex.core.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.hckim.pokedex.core.database.FavoriteEntity
+import com.hckim.pokedex.core.data.remotemediator.PokemonRemoteMediator
 import com.hckim.pokedex.core.database.PokeDatabase
+import com.hckim.pokedex.core.database.model.FavoriteEntity
+import com.hckim.pokedex.core.database.model.asExternalModel
 import com.hckim.pokedex.core.domain.repository.PokemonRepository
 import com.hckim.pokedex.core.model.Pokemon
 import com.hckim.pokedex.core.model.PokemonType
-import com.hckim.pokedex.core.network.PokemonApi
+import com.hckim.pokedex.core.network.model.asEntity
+import com.hckim.pokedex.core.network.retrofit.PokemonApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DefaultPokemonRepository @Inject constructor(
+internal class DefaultPokemonRepository @Inject constructor(
     private val api: PokemonApi,
     private val db: PokeDatabase,
     private val remoteMediator: PokemonRemoteMediator
@@ -31,7 +34,7 @@ class DefaultPokemonRepository @Inject constructor(
             remoteMediator = if (isSearching) null else remoteMediator,
             pagingSourceFactory = { db.pokemonDao().pagingSource(query, type?.name) }
         ).flow.map { pagingData ->
-            pagingData.map { it.toDomain() }
+            pagingData.map { it.asExternalModel() }
         }
     }
 
@@ -40,7 +43,7 @@ class DefaultPokemonRepository @Inject constructor(
             config = PAGING_CONFIG,
             pagingSourceFactory = { db.pokemonDao().favoritesPagingSource() }
         ).flow.map { pagingData ->
-            pagingData.map { it.toDomain() }
+            pagingData.map { it.asExternalModel() }
         }
     }
 
@@ -48,12 +51,12 @@ class DefaultPokemonRepository @Inject constructor(
         return try {
             val localPokemon = db.pokemonDao().getPokemonByName(name)
             if (localPokemon != null) {
-                Result.success(localPokemon.toDomain())
+                Result.success(localPokemon.asExternalModel())
             } else {
                 val response = api.getPokemonDetails(name)
-                val entity = response.toEntity()
+                val entity = response.asEntity()
                 db.pokemonDao().insertAll(listOf(entity))
-                Result.success(entity.toDomain())
+                Result.success(entity.asExternalModel())
             }
         } catch (e: Exception) {
             Result.failure(e)

@@ -1,10 +1,12 @@
-package com.hckim.pokedex.core.database
+package com.hckim.pokedex.core.database.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.hckim.pokedex.core.database.model.FavoriteEntity
+import com.hckim.pokedex.core.database.model.PokemonEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -51,16 +53,4 @@ interface PokemonDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE id = :id)")
     fun isFavorite(id: Int): Flow<Boolean>
-}
-
-@Dao
-interface RemoteKeyDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(remoteKey: List<RemoteKeyEntity>)
-
-    @Query("SELECT * FROM remote_keys WHERE pokemonId = :id")
-    suspend fun remoteKeysPokemonId(id: Int): RemoteKeyEntity?
-
-    @Query("DELETE FROM remote_keys")
-    suspend fun clearRemoteKeys()
 }

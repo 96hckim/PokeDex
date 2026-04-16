@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.database
+package com.hckim.pokedex.core.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
