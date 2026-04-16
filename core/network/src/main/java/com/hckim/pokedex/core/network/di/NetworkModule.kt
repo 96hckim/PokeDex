@@ -55,7 +55,5 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesPokemonApi(retrofit: Retrofit): PokemonApi {
-        return retrofit.create(PokemonApi::class.java)
-    }
+    fun providesPokemonApi(retrofit: Retrofit): PokemonApi = retrofit.create(PokemonApi::class.java)
 }
