@@ -8,11 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.model)
-    implementation(projects.core.common)
-    implementation(projects.core.domain)
-    implementation(projects.core.ui)
-
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.iconsExtended)
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.hckim.pokedex.core.ui.theme.PokeDexTheme
+import com.hckim.pokedex.designsystem.theme.PokeDexTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.ui.theme
+package com.hckim.pokedex.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

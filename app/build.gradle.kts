@@ -45,6 +45,7 @@ dependencies {
     implementation(projects.feature.favorites)
 
     implementation(projects.core.common)
+    implementation(projects.core.designsystem)
     implementation(projects.core.ui)
     implementation(projects.core.data)
     implementation(projects.core.model)

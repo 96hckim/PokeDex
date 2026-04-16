@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.ui.theme
+package com.hckim.pokedex.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

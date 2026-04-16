@@ -1,4 +1,4 @@
-package com.hckim.pokedex.core.ui.theme
+package com.hckim.pokedex.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
