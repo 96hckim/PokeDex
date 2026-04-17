@@ -19,6 +19,8 @@ okhttp = "5.3.2"
 retrofit = "3.0.0"
 room = "2.8.4"
 paging = "3.4.2"
+mockk = "1.14.9"
+turbine = "1.2.1"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test-junit4", "androidx-compose-ui-test-manifest"]
@@ -64,6 +66,8 @@ room-paging = { group = "androidx.room", name = "room-paging", version.ref = "ro
 paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
 paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }

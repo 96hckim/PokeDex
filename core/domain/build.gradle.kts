@@ -8,4 +8,8 @@ dependencies {
     implementation(libs.javax.inject)
 
     implementation(libs.paging.common)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
 }
