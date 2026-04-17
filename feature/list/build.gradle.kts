@@ -20,4 +20,9 @@ dependencies {
     implementation(libs.paging.compose)
 
     androidTestImplementation(libs.bundles.androidx.compose.ui.test)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.androidx.lifecycle.runtimeTesting)
 }
