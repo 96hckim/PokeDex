@@ -2,17 +2,17 @@
 
 > **PokeAPI를 활용한 오프라인 우선(Offline-first) 포켓몬 도감 안드로이드 프로젝트**
 
-이 프로젝트는 대규모 앱에서도 유지보수와 테스트가 용이하도록 설계된 **MVI (Model-View-Intent)** 아키텍처와 **멀티 모듈(Multi-Module)** 구조를 깊이 있게 학습하고 실무에 적용하기 위해 개발되었습니다.
+이 프로젝트는 대규모 앱에서도 유지보수와 테스트가 용이하도록 설계된 **MVI (Model-View-Intent)** 아키텍처와 **멀티 모듈(Multi-Module)** 구조를 실무 수준으로 구현하고, 안정적인 빌드 인프라를 구축하는 데 중점을 두었습니다.
 
 ---
 
 ## 🌟 Key Features
 
-- **Pokemon Paging List:** `Paging3` 및 `RemoteMediator`를 활용한 대용량 데이터의 효율적인 무한 스크롤 및 네트워크-로컬 DB 동기화.
-- **Search & Filter:** 포켓몬 이름 검색 및 타입별 필터링 기능을 통한 데이터 탐색.
-- **Offline Support:** 네트워크 연결 없이도 기존에 로드된 데이터를 탐색할 수 있는 `Room` 기반 로컬 캐싱.
-- **Dynamic UI:** 포켓몬 고유 타입에 맞춘 동적 테마 컬러링 및 `Jetpack Compose` 애니메이션을 활용한 스탯 시각화.
-- **Favorites:** 관심 있는 포켓몬을 즐겨찾기에 등록하고 관리하는 기능.
+- **Pokemon Paging List:** `Paging3` 및 `RemoteMediator`를 활용하여 네트워크와 로컬 DB를 동기화하고, 대용량 데이터의 무한 스크롤 최적화.
+- **Search & Filter:** 실시간 이름 검색 및 타입별 필터링을 통한 데이터 탐색 기능.
+- **Offline Support:** `Room` 기반 로컬 캐싱을 통해 네트워크 연결이 없는 환경에서도 끊김 없는 사용자 경험 제공.
+- **Dynamic UI:** 포켓몬 타입별 동적 테마 컬러링 및 `Jetpack Compose` 애니메이션을 활용한 시각적 스탯 정보 제공.
+- **Favorites:** 관심 포켓몬 즐겨찾기 등록 및 관리 기능.
 
 ---
 
