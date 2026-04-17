@@ -17,4 +17,9 @@ dependencies {
     implementation(libs.coil.kt.network.okhttp)
 
     androidTestImplementation(libs.bundles.androidx.compose.ui.test)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.androidx.lifecycle.runtimeTesting)
 }
